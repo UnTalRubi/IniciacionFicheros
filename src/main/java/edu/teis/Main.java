@@ -9,15 +9,15 @@ import java.util.Scanner;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
 
         System.out.println("Introduce un directorio:");
         Scanner scanner = new Scanner(System.in);
         String dirRoute = scanner.nextLine();
         Path path = Path.of(dirRoute);
 
-        System.out.println("Contenido de " + dirRoute);
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
+            System.out.println("Contenido de " + dirRoute);
             for (Path file : stream) {
 
                 String fileType;
@@ -32,6 +32,8 @@ public class Main {
 
                 System.out.println(fileType + filePermits + "\t" + file.getFileName());
             }
+        }catch (IOException e){
+            System.err.println("Directorio inválido: " + e.getMessage());
         }
     }
 }
