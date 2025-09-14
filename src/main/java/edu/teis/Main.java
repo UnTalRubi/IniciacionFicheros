@@ -20,7 +20,17 @@ public class Main {
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
             for (Path file : stream) {
 
-                System.out.println(file.getFileName());
+                String fileType;
+
+                if (Files.isDirectory(file)) fileType = "d";
+                else fileType = "-";
+
+                String filePermits =
+                        (Files.isReadable(file) ? "r" : "-") +
+                        (Files.isWritable(file) ? "w" : "-") +
+                        (Files.isExecutable(file) ? "e" : "-");
+
+                System.out.println(fileType + filePermits + "\t" + file.getFileName());
             }
         }
     }
