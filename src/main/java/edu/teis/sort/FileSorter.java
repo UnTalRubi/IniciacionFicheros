@@ -21,11 +21,11 @@ public class FileSorter {
         Path newPath = Paths.get(newRoute);
 
         System.out.println("Introduce el orden de preferencia:" +
-                "\n" + "(1) Ascendente Case-sensitive" +
-                "\n" + "(2) Ascendente Case-insensitive" +
-                "\n" + "(3) Descendente Case-sensitive" +
-                "\n" + "(4) Descendente Case-insensitive");
-        Integer choiceOrder = scanner.nextInt();
+                "\n(1) Ascendente Case-sensitive" +
+                "\n(2) Ascendente Case-insensitive" +
+                "\n(3) Descendente Case-sensitive" +
+                "\n(4) Descendente Case-insensitive");
+        int choiceOrder = scanner.nextInt();
         if(choiceOrder < 0 || choiceOrder > 4){
             System.err.println("Orden no valido");}
 
