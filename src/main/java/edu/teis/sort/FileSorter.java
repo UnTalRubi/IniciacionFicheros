@@ -12,9 +12,12 @@ public class FileSorter {
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Introduce la dirección del fichero:");
+        System.out.println("Introduce la dirección y nombre del fichero:");
         String ogRoute = scanner.nextLine();
         Path ogPath = Paths.get(ogRoute);
+
+        String fileName = ogPath.getFileName().toString();
+        String nameNoExtension = fileName.substring(0, fileName.lastIndexOf('.'));
 
         System.out.println("Introduce la dirección del nuevo fichero:");
         String newRoute = scanner.nextLine();
@@ -33,14 +36,21 @@ public class FileSorter {
             List<String> fileLines = Files.readAllLines(ogPath);
 
             switch (choiceOrder){
-                case 1: Files.writeString(newPath, fileLines.stream().sorted().
-                        collect(Collectors.joining()));
-                case 2: Files.writeString(newPath, fileLines.stream().sorted().
-                        collect(Collectors.joining("[]")));
-                case 3: Files.writeString(newPath, fileLines.stream().sorted().
-                        collect(Collectors.joining("{}")));
-                case 4: Files.writeString(newPath, fileLines.stream().sorted().
-                        collect(Collectors.joining("<>")));
+                case 1: Files.writeString(Path.of(newPath + nameNoExtension +"asc_case.txt"),
+                        fileLines.stream().sorted().
+                        collect(Collectors.joining("\n")));
+                break;
+                case 2: Files.writeString(Path.of(newPath + nameNoExtension +"asc_non_case.txt"),
+                        fileLines.stream().sorted().
+                        collect(Collectors.joining("\n")));
+                break;
+                case 3: Files.writeString(Path.of(newPath + nameNoExtension +"desc_case.txt"),
+                        fileLines.stream().sorted().
+                        collect(Collectors.joining("\n")));
+                break;
+                case 4: Files.writeString(Path.of(newPath + nameNoExtension +"desc_non_case.txt"),
+                        fileLines.stream().sorted().
+                        collect(Collectors.joining("\n")));
             }
         } catch (IOException e){
             System.err.println("Error al leer el archivo");
