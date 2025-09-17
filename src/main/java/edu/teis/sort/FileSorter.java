@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -35,25 +36,41 @@ public class FileSorter {
         try {
             List<String> fileLines = Files.readAllLines(ogPath);
 
-            switch (choiceOrder){
-                case 1: Files.writeString(Path.of(newPath + nameNoExtension +"asc_case.txt"),
-                        fileLines.stream().sorted().
-                        collect(Collectors.joining("\n")));
-                break;
-                case 2: Files.writeString(Path.of(newPath + nameNoExtension +"asc_non_case.txt"),
-                        fileLines.stream().sorted().
-                        collect(Collectors.joining("\n")));
-                break;
-                case 3: Files.writeString(Path.of(newPath + nameNoExtension +"desc_case.txt"),
-                        fileLines.stream().sorted().
-                        collect(Collectors.joining("\n")));
-                break;
-                case 4: Files.writeString(Path.of(newPath + nameNoExtension +"desc_non_case.txt"),
-                        fileLines.stream().sorted().
-                        collect(Collectors.joining("\n")));
+            Files.createDirectories(newPath);
+
+            Path outputFile;
+            List<String> sortedLines;
+
+            switch (choiceOrder) {
+                case 1: sortedLines = fileLines.stream()
+                            .sorted()
+                            .collect(Collectors.toList());
+                    outputFile = newPath.resolve(nameNoExtension + "_asc_case.txt");
+                    break;
+                case 2: sortedLines = fileLines.stream()
+                            .sorted(String.CASE_INSENSITIVE_ORDER)
+                            .collect(Collectors.toList());
+                    outputFile = newPath.resolve(nameNoExtension + "_asc_non_case.txt");
+                    break;
+                case 3: sortedLines = fileLines.stream()
+                            .sorted(Comparator.reverseOrder())
+                            .collect(Collectors.toList());
+                    outputFile = newPath.resolve(nameNoExtension + "_desc_case.txt");
+                    break;
+                case 4: sortedLines = fileLines.stream()
+                            .sorted(String.CASE_INSENSITIVE_ORDER.reversed())
+                            .collect(Collectors.toList());
+                    outputFile = newPath.resolve(nameNoExtension + "_desc_non_case.txt");
+                    break;
+                default:
+                    throw new IllegalStateException("Orden inesperado");
             }
+
+            Files.write(outputFile, sortedLines);
+            System.out.println("Archivo creado en: " + outputFile);
+
         } catch (IOException e){
-            System.err.println("Error al leer el archivo");
+            System.err.println("Error al leer el archivo" + e.getMessage());
         }
     }
 }
