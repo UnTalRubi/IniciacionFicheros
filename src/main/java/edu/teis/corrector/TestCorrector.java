@@ -13,7 +13,7 @@ public class TestCorrector {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Enter the file path to correct:");
+        System.out.println("Introduce la dirección del fichero a corregir:");
         String route = scanner.nextLine();
         Path path = Paths.get(route);
 
@@ -21,12 +21,12 @@ public class TestCorrector {
         try {
             fileLines = Files.readAllLines(path);
         } catch (IOException e) {
-            System.err.println("Invalid file: " + e.getMessage());
+            System.err.println("Fichero inválido: " + e.getMessage());
             return;
         }
 
         if (fileLines.isEmpty()) {
-            System.out.println("File is empty.");
+            System.out.println("El fichero está vacío");
             return;
         }
 
@@ -43,8 +43,8 @@ public class TestCorrector {
             }
         }
 
-        System.out.println("Answer: " + answerKey);
-        System.out.println("Scores: ");
+        System.out.println("Respuesta correcta: " + answerKey);
+        System.out.println("Puntuaciones: ");
 
         for (Map.Entry<String, String> entry : answersMap.entrySet()) {
             String studentCode = entry.getKey();
