@@ -26,8 +26,7 @@ public class TestCorrector {
         }
 
         if (fileLines.isEmpty()) {
-            System.out.println("El fichero está vacío");
-            return;
+            System.err.println("El fichero está vacío");
         }
 
         String answerKey = fileLines.getFirst();
@@ -40,6 +39,8 @@ public class TestCorrector {
                 String studentCode = parts[0];
                 String studentAnswers = parts[1];
                 answersMap.put(studentCode, studentAnswers);
+            }else{
+                System.err.println("Fichero inválido");
             }
         }
 
